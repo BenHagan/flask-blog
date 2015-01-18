@@ -31,7 +31,7 @@ def login():
         else:
             session['logged_in'] = True
             return redirect(url_for('main'))
-        return render_template('login.html', error=error)
+    return render_template('login.html', error=error)
 
 @app.route('/main')
 def main():
