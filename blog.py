@@ -22,6 +22,16 @@ app.config.from_object(__name__)
 def connect_db():
     return sqlite3.connect(app.config['DATABASE'])
 
+def login_required(test):
+    @wraps(test)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:
+            return test(*args, **kwargs)
+        else:
+            flash('You need to login first.')
+            return redirect(url_for('login'))
+    return wrap
+
 @app.route('/', methods=['GET', 'POST'])
 def login():
     error = None
@@ -44,16 +54,6 @@ def logout():
     session.pop('logged_in', None)
     flash('You were logged out')
     return redirect(url_for('login'))
-
-def login_required(test):
-    @wraps(test)
-    def wrap(*args, **kwargs):
-        if 'logged_in' in session:
-            return test(*args, **kwargs)
-        else:
-            flash('You need to login first.')
-            return redirect(url_for('login'))
-    return wrap
 
 if __name__ == '__main__':
     app.run(debug=True)
