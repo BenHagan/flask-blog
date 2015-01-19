@@ -74,9 +74,9 @@ def add():
         flash("All fields are required.  Please try again.")
         return redirect(url_for('main'))
     else:
-        g.db = connect.db()
-        g.db.execute('INSERT INTO posts(title, post) VALUES \
-            (?, ?)', title, post)
+        g.db = connect_db()
+        g.db.execute('INSERT INTO posts(title, post) VALUES\
+         (?, ?)', [title, post])
         g.db.commit()
         g.db.close()
         flash('New entry was successfully posted!')
