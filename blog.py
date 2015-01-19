@@ -4,7 +4,7 @@
 from flask import Flask, render_template, request, session, \
     flash, redirect, url_for, g
 import sqlite3
-import functools import wraps
+from functools import wraps
 
 #configuration
 DATABASE = 'blog.db'
